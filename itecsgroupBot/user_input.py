@@ -1,13 +1,28 @@
 import telebot
+from telegram import Update
+from telegram.ext import ApplicationBuilder , ContextTypes , CommandHandler
 
 from telebot import types
 
 class UserInputHandler:
 
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, context , update):
+        self.bot = context.bot
         self.product_list = []
 
+
+    async def add_product_start(update: Update , context: ContextTypes.DEFAULT_TYPE , self) :
+        try:
+         await context.bot.send_message(chat_id = update.effective_chat.id, text= "product added  !!" )
+         await self.add_product_name(update , context)
+        except Exception as e:
+             context.bot.reply_to(update, 'مشکلی پیش آمده است.')
+
+    async def add_product_name(update: Update , context: ContextTypes.DEFAULT_TYPE) :
+        try:
+         await context.bot.send_message(chat_id = update.effective_chat.id, text=  "لطفا نام محصول را وارد کنید ")
+        except Exception as e:
+             context.bot.reply_to(update, 'مشکلی پیش آمده است.')
 
     def process_start_step(message, self):
         try:
@@ -70,7 +85,7 @@ class UserInputHandler:
                     'reference': reference,
                     'description': description}
 
-          
+
             self.product_list.append(product)
             self.bot.reply_to(message, 'محصول با موفقیت به لیست اضافه شد.')
 
