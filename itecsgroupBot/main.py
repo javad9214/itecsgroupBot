@@ -23,8 +23,8 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 product = []
 
 async def start(update: Update , context: ContextTypes.DEFAULT_TYPE):
-   user_input_handler = UserInputHandler(context)
-   await user_input_handler.add_product_start(update , context)
+   user_input_handler = UserInputHandler(context , update)
+   await user_input_handler.add_product_start()
 
 async def addProduct(update: Update , context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(

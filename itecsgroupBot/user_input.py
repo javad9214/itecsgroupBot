@@ -1,28 +1,39 @@
+import logging
+
 import telebot
 from telegram import Update
 from telegram.ext import ApplicationBuilder , ContextTypes , CommandHandler
 
 from telebot import types
 
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
+logging.getLogger("httpx").setLevel(logging.WARNING)
 class UserInputHandler:
 
     def __init__(self, context , update):
         self.bot = context.bot
         self.product_list = []
+        self.context = context
+        self.update = update
 
 
-    async def add_product_start(update: Update , context: ContextTypes.DEFAULT_TYPE , self) :
+    async def add_product_start(self) :
         try:
-         await context.bot.send_message(chat_id = update.effective_chat.id, text= "product added  !!" )
-         await self.add_product_name(update , context)
+         await self.context.bot.send_message(chat_id = self.update.effective_chat.id, text= "product added  !!" )
+         await self.add_product_name()
         except Exception as e:
-             context.bot.reply_to(update, 'مشکلی پیش آمده است.')
+            await self.context.bot.send_message(self.update, ' مشکلی پیش آمده است.')
 
-    async def add_product_name(update: Update , context: ContextTypes.DEFAULT_TYPE) :
+    async def add_product_name(self) :
         try:
-         await context.bot.send_message(chat_id = update.effective_chat.id, text=  "لطفا نام محصول را وارد کنید ")
+         await self.context.bot.send_message(chat_id = self.update.effective_chat.id, text=  "لطفا نام محصول را وارد کنید ")
+         logging.info("message is %s" , result)
         except Exception as e:
-             context.bot.reply_to(update, 'مشکلی پیش آمده است.')
+            await self.context.bot.send_message(self.update, 'مشکلی پیش آمده است.')
 
     def process_start_step(message, self):
         try:
