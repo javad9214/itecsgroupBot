@@ -3,10 +3,15 @@ import logging
 
 from telegram import Update
 
-from telegram.ext import (Application)
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    ContextTypes,
+    ConversationHandler)
 
 from UserInput import inputMain
 from Config import TOKEN
+from Strings import WELLCOME
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -16,35 +21,20 @@ logging.basicConfig(
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
 
-# bot = telebot.TeleBot(TOKEN)
 
 
 product = []
 
-# async def start(update: Update , context: ContextTypes.DEFAULT_TYPE):
-#    user_input_handler = UserInputHandler(context , update)
-#    await user_input_handler.add_product_start()
-
-# async def addProduct(update: Update , context: ContextTypes.DEFAULT_TYPE):
-#     await context.bot.send_message(
-#         chat_id = update.effective_chat.id,
-#         text= "product added  !!"
-#         )
-
-# @bot.message_handler(commands=['add_product'])
-# def add_product(message):
-#     product = user_input_handler.process_product_step(message)
-#     if product is not None:
-#         print(product)
-#     else:
-#         print("product is null")
-
+async def start(update, context ):
+    await update.message.reply_text(WELLCOME)
 
 
 
 def main():
      # Create the Application and pass it your bot's token.
     application = Application.builder().token(TOKEN).build()
+
+    application.add_handler(CommandHandler("start", start))
 
     conversation_handler = inputMain()
 

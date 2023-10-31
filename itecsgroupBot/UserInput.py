@@ -13,7 +13,8 @@ from Strings import (
     ENTER_PRODUCT_NAME,
     ENTER_THE_PRICE,
     ENTER_THE_CATEGORY,
-    ENTER_THE_DESCRIPTION
+    ENTER_THE_DESCRIPTION,
+    PRODUCT_ADDED_SUCCESSFILLY
 )
 # Enable logging
 logging.basicConfig(
@@ -28,61 +29,72 @@ logger = logging.getLogger(__name__)
 PRODUCT_NAME, PRICE, CATEGORY, UPDATE_DATE, DESCRIPTION  = range(5)
 
 # Handler for the /start command
-async def start(update, context) -> int :
+async def addProduct(update, context) -> int :
     await update.message.reply_text(ENTER_PRODUCT_NAME)
 
-    # Transition to the FIRST state
+
     return PRODUCT_NAME
 
-# Handler for the user's response
-async def price(update, context) -> int:
-    # user = update.message.from_user
-    product_name = update.message.text
-    logging.info("the name of product is : %s", product_name )
+async def productName(update, context) -> int:
+    productNameValue = update.message.text
+    logging.info("the name of product is : %s", productNameValue )
 
     await update.message.reply_text(ENTER_THE_PRICE)
 
-    # Transition to the SECOND state
+
     return PRICE
 
-async def category(update, context) -> int:
-    price = update.message.text
 
-    logging.info("the price of product is : %s", price )
+async def price(update, context) -> int:
+    # user = update.message.from_user
+    priceValue = update.message.text
+
+    logging.info("the price of product is : %s", priceValue )
 
     await update.message.reply_text(ENTER_THE_CATEGORY)
 
-    # Transition to the SECOND state
+
     return CATEGORY
 
-async def description(update, context) -> int:
-    category = update.message.text
 
-    logging.info("the price of product is : %s", category )
+async def category(update, context) -> int:
+    categoryValue = update.message.text
+
+    logging.info("the category of product is : %s", categoryValue )
 
     await update.message.reply_text(ENTER_THE_DESCRIPTION)
 
-    # Transition to the SECOND state
+
     return DESCRIPTION
 
+async def description(update, context) -> int:
+    descriptionValue = update.message.text
+
+    logging.info("the description of product is : %s", descriptionValue )
+
+    await update.message.reply_text(PRODUCT_ADDED_SUCCESSFILLY)
+
+
+    return ConversationHandler.END
+
 # Handler for the /cancel command
-def cancel(update, context):
-    update.message.reply_text("Conversation canceled.")
+async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Conversation canceled.")
     return ConversationHandler.END
 
 def inputMain():
 
     # Create a ConversationHandler with states
     conversation_handler = ConversationHandler(
-        entry_points=[CommandHandler('start', start)],
+        entry_points=[CommandHandler('add_product', addProduct)],
         states={
-            PRODUCT_NAME: [MessageHandler(filters.TEXT, price)],
-            PRICE: [MessageHandler(filters.TEXT, category)],
-            CATEGORY: [MessageHandler(filters.TEXT, description)],
-            DESCRIPTION:[MessageHandler(filters.TEXT, price)]
+            PRODUCT_NAME: [MessageHandler(filters.TEXT, productName)],
+            PRICE: [MessageHandler(filters.TEXT, price)],
+            CATEGORY: [MessageHandler(filters.TEXT, category)],
+            DESCRIPTION:[MessageHandler(filters.TEXT, description)]
 
         },
-        fallbacks=[CommandHandler('cancel', cancel)],
+        fallbacks=[CommandHandler('cancel', cancel)]
     )
 
     return conversation_handler
