@@ -1,6 +1,5 @@
 import logging
 
-
 from telegram import Update
 
 from telegram.ext import (
@@ -9,7 +8,7 @@ from telegram.ext import (
     ContextTypes,
     ConversationHandler)
 
-from UserInput import inputMain
+from UserInput import input_main
 from Config import TOKEN
 from Strings import WELLCOME
 
@@ -20,27 +19,24 @@ logging.basicConfig(
 
 logging.getLogger("httpx").setLevel(logging.WARNING)
 
-
-
-
 product = []
 
-async def start(update, context ):
+
+async def start(update, context):
     await update.message.reply_text(WELLCOME)
 
 
-
 def main():
-     # Create the Application and pass it your bot's token.
+    # Create the Application and pass it your bot's token.
     application = Application.builder().token(TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
 
-    conversation_handler = inputMain()
+    conversation_handler = input_main()
 
     application.add_handler(conversation_handler)
 
-   # Run the bot until the user presses Ctrl-C
+    # Run the bot until the user presses Ctrl-C
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 
