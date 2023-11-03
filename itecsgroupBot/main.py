@@ -8,9 +8,9 @@ from telegram.ext import (
     ContextTypes,
     ConversationHandler)
 
-from UserInput import input_main
-from Config import TOKEN
-from Strings import WELLCOME
+from user_input import input_main
+from config import TOKEN
+from strings import WELLCOME
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

@@ -9,7 +9,7 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
-from Strings import (
+from strings import (
     ENTER_PRODUCT_NAME,
     ENTER_THE_PRICE,
     ENTER_THE_CATEGORY,
