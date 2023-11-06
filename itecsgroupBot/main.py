@@ -1,16 +1,13 @@
 import logging
 
 from telegram import Update
-
 from telegram.ext import (
     Application,
-    CommandHandler,
-    ContextTypes,
-    ConversationHandler)
+    CommandHandler)
 
-from user_input import input_main
 from config import TOKEN
-from strings import WELLCOME
+from constants.strings import Strings
+from user_input import input_main
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -23,7 +20,7 @@ product = []
 
 
 async def start(update, context):
-    await update.message.reply_text(WELLCOME)
+    await update.message.reply_text(Strings.Global.WELLCOME)
 
 
 def main():

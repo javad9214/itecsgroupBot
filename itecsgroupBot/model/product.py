@@ -1,8 +1,8 @@
 class Product:
-    def __init__(self, name, price, author, date, category, description):
-        self.name = name
-        self.price = price
-        self.author = author
-        self.date = date
-        self.category = category
-        self.description = description
+    def __init__(self):
+        self.name = None
+        self.price = None
+        self.author = None
+        self.date = None
+        self.category = None
+        self.description = None
