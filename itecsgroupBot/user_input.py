@@ -10,8 +10,10 @@ from telegram.ext import (
 )
 
 from constants.strings import Strings
+from db.database import write_product_to_db
 from model.product import Product
 from utils.date import DateTime
+from utils.price_formatter import formate_price
 
 # Enable logging
 logging.basicConfig(
@@ -30,8 +32,7 @@ product = Product()
 
 # Handler for the /start command
 async def add_product(update, context) -> int:
-    await update.message.reply_text(Strings.Product.PRODUCT_NAME)
-
+    await update.message.reply_text(Strings.UserInput.PRODUCT_NAME)
     return PRODUCT_NAME
 
 
@@ -39,7 +40,7 @@ async def product_name(update, context) -> int:
     product_name_value = update.message.text
     logging.info("the name of product is : %s", product_name_value)
     product.name = product_name_value
-    await update.message.reply_text(Strings.Product.PRICE)
+    await update.message.reply_text(Strings.UserInput.PRICE)
 
     return PRICE
 
@@ -53,10 +54,9 @@ async def price(update, context) -> int:
         return PRICE
     else:
         price_value = int(price_value)
-        formatted_price = "{:,} تومان".format(price_value)
-        logging.info("the price of product is : %s", formatted_price)
+        logging.info("the price of product is : %s", formate_price(price_value))
         product.price = price_value
-        await update.message.reply_text(Strings.Product.CATEGORY)
+        await update.message.reply_text(Strings.UserInput.CATEGORY)
 
     return CATEGORY
 
@@ -66,7 +66,7 @@ async def category(update, context) -> int:
 
     logging.info("the category of product is : %s", category_value)
     product.category = category_value
-    await update.message.reply_text(Strings.Product.DESCRIPTION)
+    await update.message.reply_text(Strings.UserInput.DESCRIPTION)
 
     return DESCRIPTION
 
@@ -76,9 +76,9 @@ async def description(update, context) -> int:
 
     logging.info("the description of product is : %s", description_value)
     product.description = description_value
-    save_product()
-    await update.message.reply_text(Strings.Product.PRODUCT_ADDED_SUCCESSFULLY)
-
+    user_info = update.message.from_user
+    add_product_author(user_info)
+    await update.message.reply_text(Strings.UserInput.PRODUCT_ADDED_SUCCESSFULLY)
     return ConversationHandler.END
 
 
@@ -88,9 +88,21 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return ConversationHandler.END
 
 
-def save_product():
+def add_product_author(user_info):
+    product_author_value = user_info.first_name
+    logging.info("the name of user is : %s", product_author_value)
+    product.author = product_author_value
+    add_product_register_date()
+
+
+def add_product_register_date():
     product.date = DateTime.get_current_time()
     logging.info("the time that product saves is : %s ", product.date)
+    save_product()
+
+
+def save_product():
+    write_product_to_db(product)
 
 
 def input_main():
