@@ -19,25 +19,32 @@ class Strings:
 
     class Categories:
         CHAHAK = "چاهک"
-        MECHANIC = "مکانیک"
-        DARB = "ریل"
-        RAIL = "درب"
-        SIMBOXOL = "سیم بکسل"
-        RAHANDAZI = "راه اندازی"
-        OVERLOAD = "اورلود"
-        BUFFER = "بافر"
-        KABIN = "کابین"
-        NIME = "نیمه"
-        TAMAM = "تمام"
-        MOTOR_KHANE = "موتورخانه"
-        TABLO_FARMAN = "تابلو فرمان"
-        GEARBOX = "گیربکس"
-        GEARLESS = "گیرلس"
-        MOTOR = "موتور"
-        MOTEALEGHAT = "متعلقات"
-        FALAKE_HARZ_GERD = "فلکه هرزگرد"
-        GAVERNER = "گاورنر"
-        TABLO_SE_FAZ = "تابلو سه فاز"
+        class CatChahack :
+            MECHANIC = "مکانیک"
+            class CatMechanic :
+                DARB = "ریل"
+                RAIL = "درب"
+                BOXOL = "بکسل"
+                SIMBOXOL = "سیم بکسل"
+                RAHANDAZI = "راه اندازی"
+                OVERLOAD = "اورلود"
+                BUFFER = "بافر"
+                KABIN = "کابین"
+                NIME = "نیمه"
+                TAMAM = "تمام"
+
+        class CatMotorKhane :
+            MOTOR_KHANE = "موتورخانه"
+            class CatTabloFarman :
+                TABLO_FARMAN = "تابلو فرمان"
+                GEARBOX = "گیربکس"
+                GEARLESS = "گیرلس"
+                MOTOR = "موتور"
+                MOTEALEGHAT = "متعلقات"
+                FALAKE_HARZ_GERD = "فلکه هرزگرد"
+                GAVERNER = "گاورنر"
+                TABLO_SE_FAZ = "تابلو سه فاز"
+
 
     class Error:
         INVALID_INPUT = "لطفا قیمت را به عدد وارد نمایید"
