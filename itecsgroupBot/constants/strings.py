@@ -19,9 +19,11 @@ class Strings:
 
     class Categories:
         CHAHAK = "چاهک"
-        class CatChahack :
+
+        class CatChahack:
             MECHANIC = "مکانیک"
-            class CatMechanic :
+
+            class CatMechanic:
                 DARB = "ریل"
                 RAIL = "درب"
                 BOXOL = "بکسل"
@@ -33,9 +35,10 @@ class Strings:
                 NIME = "نیمه"
                 TAMAM = "تمام"
 
-        class CatMotorKhane :
+        class CatMotorKhane:
             MOTOR_KHANE = "موتورخانه"
-            class CatTabloFarman :
+
+            class CatTabloFarman:
                 TABLO_FARMAN = "تابلو فرمان"
                 GEARBOX = "گیربکس"
                 GEARLESS = "گیرلس"
@@ -44,7 +47,6 @@ class Strings:
                 FALAKE_HARZ_GERD = "فلکه هرزگرد"
                 GAVERNER = "گاورنر"
                 TABLO_SE_FAZ = "تابلو سه فاز"
-
 
     class Error:
         INVALID_INPUT = "لطفا قیمت را به عدد وارد نمایید"
